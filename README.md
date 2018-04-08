@@ -26,4 +26,4 @@ Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `Makefile`, `make` and r
 References
 ----------
 
-1. [Disproving the existence of some magics](http://www.talkchess.com/forum/viewtopic.php?t=65187).
+1. [Disproving the existence of some magics](http://www.talkchess.com/forum/viewtopic.php?t=65187). 2017.
