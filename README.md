@@ -18,6 +18,8 @@ Tricks for fast testing
 
 ![Performance comparison](/fig-benchmark-rf8.png)
 
+*Comparison of approaches based on search of improved rook magics for f8.*
+
 Usage
 -----
 
