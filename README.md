@@ -18,7 +18,7 @@ Tricks for fast testing
 
 ![Performance comparison](/fig-benchmark-rf8.png)
 
-*Comparison of approaches based on search of improved rook magics for f8.*
+*Performance based on search of improved rook magics for f8.*
 
 Usage
 -----
@@ -29,3 +29,4 @@ References
 ----------
 
 1. [Disproving the existence of some magics](http://www.talkchess.com/forum/viewtopic.php?t=65187). 2017.
+2. [No bishop magics with fixed shift 8](http://www.talkchess.com/forum/viewtopic.php?t=67051). 2018.
