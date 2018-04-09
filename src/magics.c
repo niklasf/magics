@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
     init_references();
 
     const int PERIOD = 64 - lsb(square_mask(SQUARE));
-    const int LOWER = 64 - lsb(square_mask(SQUARE)) - HARD_SHIFT;
+    const int LOWER = 64 - lsb(square_mask(SQUARE)) - FIXED_SHIFT;
 
     const int NUM_CHUNKS = UINT64_C(1) << (PERIOD - CHUNK_SIZE);
     const int NUM_SLICES = UINT64_C(1) << (CHUNK_SIZE - SLICE_SIZE);
