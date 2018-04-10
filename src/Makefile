@@ -1,4 +1,4 @@
-CFLAGS = -D BISHOP -D SQUARE=35 -D EASY_SHIFT=9 -std=gnu99 -march=native -Ofast -Wall
+CFLAGS = -D BISHOP -D SQUARE=35 -D EASY_SHIFT=9 -std=gnu99 -march=native -Ofast -flto -fwhole-program -Wall
 
 all: magics
 
@@ -10,4 +10,4 @@ magics.gcda: magics-instrumented
 	./magics-instrumented --profile
 
 magics-instrumented: magics.c
-	gcc $(CFLAGS) -fprofile-generate=magics.gcda magics.c -o magics-instrumented
+	gcc $(CFLAGS) -fprofile-generate magics.c -o magics-instrumented
