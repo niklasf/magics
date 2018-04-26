@@ -20,10 +20,24 @@ Tricks for fast testing
 
 *Performance based on search of improved rook magics for f8.*
 
-Usage
+Tools
 -----
 
-Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `Makefile`, `make` and run `./magics <chunk>`.
+### `verify.py <CANDIDATE>`
+
+Verifies a magic candidate.
+
+### `src/magics <CHUNK>`
+
+Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `src/Makefile`,
+`make` and run `./magics <CHUNK>`. Tests all candidates in the specified range.
+
+### `cuda/test`
+
+Define period in `test.cu`. Select square, piece type and shift in
+`generate.py`. `make` and run `./test` to find magic factors with the specified
+shift or disprove their existence. Works best for bishop squares (with small
+shifts and small table sizes).
 
 References
 ----------

@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdbool.h>
 
-#define PERIOD (UINT64_C(1) << UINT64_C(34)) // d7
+#define PERIOD (UINT64_C(1) << UINT64_C(42)) // h2
 
 #define CHUNKS (1 << 19)
 #define THREADS_PER_BLOCK 32

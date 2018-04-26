@@ -2,7 +2,7 @@ import chess
 import itertools
 
 deltas = [-7, 7, -9, 9]
-square = chess.D7
+square = chess.H2
 shift = 4
 
 refs = {}
