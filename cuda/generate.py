@@ -16,20 +16,23 @@
 import chess
 import itertools
 
-deltas = [-7, 7, -9, 9]
-square = chess.H2
-shift = 4
+DELTAS = [-7, 7, -9, 9]
+SQUARE = chess.B8
+SHIFT = 4
 
+mask = chess._sliding_attacks(SQUARE, 0, DELTAS) & ~chess._edges(SQUARE)
+
+print(r"""
+#define PERIOD (UINT64_C(1) << {}) // {}
+""".format(64 - chess.lsb(mask), chess.SQUARE_NAMES[SQUARE]))
+
+auto_increment = itertools.count(1)
 refs = {}
 normalized = {}
 
-auto_increment = itertools.count(1)
-attack_id = 0
-
-mask = chess._sliding_attacks(square, 0, deltas) & ~chess._edges(square)
 subset = 0
 while True:
-    attack = chess._sliding_attacks(square, subset, deltas)
+    attack = chess._sliding_attacks(SQUARE, subset, DELTAS)
     if attack not in normalized:
         attack_id = next(auto_increment)
         normalized[attack] = attack_id
@@ -46,10 +49,10 @@ print(r"""
 __device__ bool check_magic(uint64_t magic) {
     char table[1 << SHIFT] = { 0 };
     int idx;
-""".replace("SHIFT", str(shift)))
+""".replace("SHIFT", str(SHIFT)))
 
 for subset, attack_id in refs.items():
-    print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, shift))
+    print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, SHIFT))
     print("    if (table[idx] && table[idx] != {}) return false;".format(attack_id))
     print("    table[idx] = {};".format(attack_id))
 

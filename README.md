@@ -34,8 +34,8 @@ Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `src/Makefile`,
 
 ### `cuda/test`
 
-Define period in `test.cu`. Select square, piece type and shift in
-`generate.py`. `make` and run `./test` to find magic factors with the specified
+Select square, piece type and shift in `generate.py`.
+`make` and run `./test` to find magic factors with the specified
 shift or disprove their existence. Works best for bishop squares (with small
 shifts and small table sizes).
 
