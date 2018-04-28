@@ -29,11 +29,12 @@ __global__ void test(uint64_t *result) {
     assert(chunk_size * CHUNKS == PERIOD);
     int chunk = THREADS_PER_BLOCK * blockIdx.x + threadIdx.x;
 
-    uint64_t magic = chunk_size * chunk;
-
     result[chunk] = 0;
 
-    while (magic < chunk_size * (chunk + 1)) {
+    uint64_t magic = chunk_size * chunk;
+    const uint64_t end_magic = magic + chunk_size;
+
+    while (magic < end_magic) {
         if (check_magic(magic)) {
             result[chunk] = magic;
             return;
