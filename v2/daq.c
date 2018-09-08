@@ -106,6 +106,20 @@ static size_t init_references(const uint64_t mask, reference_t * const refs) {
     return size;
 }
 
+static int attack_sets(const reference_t * refs, int size) {
+    int sets = 0;
+    for (int i = 0; i < size; i++) {
+        sets++;
+        for (int j = 0; j < i; j++) {
+            if (refs[i].attack == refs[j].attack) {
+                sets--;
+                break;
+            }
+        }
+    }
+    return sets;
+}
+
 static uint64_t square_mask(const int deltas[], int square) {
     uint64_t edges = (((BB_RANKS[0] | BB_RANKS[7]) & ~BB_RANKS[square_rank(square)]) |
                       ((BB_FILES[0] | BB_FILES[7]) & ~BB_FILES[square_file(square)]));
@@ -121,6 +135,8 @@ typedef struct {
     int prefix_bits;
     bool last;
 
+    int unique_attacks;
+
     uint64_t min;
     uint64_t step;
     uint64_t max;
@@ -134,6 +150,7 @@ typedef struct {
 } stack_t;
 
 static stack_t stack[MAX_SQUARES];
+static int unique_attacks;
 static uint64_t num_magics = 0;
 
 static void init_stack(uint64_t max_occupied) {
@@ -150,6 +167,7 @@ static void init_stack(uint64_t max_occupied) {
         stack[i].step = UINT64_C(1) << stack[i].prefix_bits;
         stack[i].max = UINT64_C(1) << stack[i].bits;
         stack[i].size = init_references(mask, stack[i].refs);
+        stack[i].unique_attacks = attack_sets(stack[i].refs, stack[i].size);
         memset(stack[i].age, 0xff, sizeof(uint64_t) * (1 << SHIFT));
         stack[i].stats = 0;
 
@@ -157,9 +175,12 @@ static void init_stack(uint64_t max_occupied) {
             stack[i].min = 0;
         }
 
-        fprintf(stderr, "stack[%d]: mask=0x%lx min=0x%lx step=0x%lx max=0x%lx\n", i, mask, stack[i].min, stack[i].step, stack[i].max);
+        fprintf(stderr, "stack[%d]: mask=0x%lx min=0x%lx step=0x%lx max=0x%lx unique=%d\n", i, mask, stack[i].min, stack[i].step, stack[i].max, stack[i].unique_attacks);
 
-        if (stack[i].last) break;
+        if (stack[i].last) {
+            unique_attacks = stack[i].unique_attacks;
+            break;
+        }
     }
 
     assert(mask == max_occupied);
@@ -203,16 +224,21 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
     for (uint64_t magic = prefix | frame->min; magic < frame->max; magic += frame->step) {
         frame->stats++;
 
+        int used_buckets = 0;
+
         size_t ref = 0;
         for (; ref < frame->size; ref++) {
             uint64_t idx = (magic * frame->refs[ref].occupied) >> (64 - SHIFT);
             if (frame->age[idx] != magic) {
                 frame->age[idx] = magic;
                 table[idx] = frame->refs[ref].attack;
+                used_buckets++;
             } else if (table[idx] != frame->refs[ref].attack) {
                 break;
             }
         }
+
+        if (used_buckets + unique_attacks - frame->unique_attacks > (1 << SHIFT)) continue;
 
         if (ref == frame->size) {
             if (frame->last) {
@@ -220,7 +246,7 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
                 printf("0x%lx\n", magic);
                 if (num_magics < 200) print_prefix(magic, depth);
             } else {
-                if (depth <= 1) print_prefix(magic, depth);
+                if (depth <= 0) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
             }
         }
