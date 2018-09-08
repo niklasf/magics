@@ -24,6 +24,8 @@ const int DELTAS[] = { 8, 1, -8, -1, 0 };
 
 #define MAX_SQUARES 12
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 static const uint64_t BB_RANKS[8] = {
     UINT64_C(0xff) << (8 * 0),
     UINT64_C(0xff) << (8 * 1),
@@ -60,8 +62,6 @@ static inline int msb(uint64_t b) {
     assert(b);
     return 63 ^ __builtin_clzll(b);
 }
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 static inline int square_rank(int square) {
     return square >> 3;
@@ -134,12 +134,13 @@ typedef struct {
 } stack_t;
 
 static stack_t stack[MAX_SQUARES];
+static uint64_t num_magics = 0;
 
 static void init_stack(uint64_t max_occupied) {
     uint64_t mask = 0;
 
     for (int i = 0; i < MAX_SQUARES; i++) {
-        stack[i].prefix_bits = mask == 0 ? 0 : 64 - lsb(mask);
+        stack[i].prefix_bits = mask ? 64 - lsb(mask) : 0;
 
         mask ^= UINT64_C(1) << msb(max_occupied ^ mask);
         stack[i].mask = mask;
@@ -153,11 +154,10 @@ static void init_stack(uint64_t max_occupied) {
         stack[i].stats = 0;
 
         if (stack[i].min <= stack[i].step) {
-            printf("ignoring min which is less than step\n");
             stack[i].min = 0;
         }
 
-        printf("mask[%d]: 0x%lx, min[%d]: 0x%lx, step[%d]: 0x%lx, max[%d]: 0x%lx\n", i, mask, i, stack[i].min, i, stack[i].step, i, stack[i].max);
+        fprintf(stderr, "stack[%d]: mask=0x%lx min=0x%lx step=0x%lx max=0x%lx\n", i, mask, stack[i].min, stack[i].step, stack[i].max);
 
         if (stack[i].last) break;
     }
@@ -168,11 +168,11 @@ static void init_stack(uint64_t max_occupied) {
 static void print_stats() {
     uint64_t total = 0;
     for (int i = 0; i < MAX_SQUARES; i++) {
-        printf("stats[%d]: %ld\n", i, stack[i].stats);
+        fprintf(stderr, "stats[%d]: %ld\n", i, stack[i].stats);
         total += stack[i].stats;
         if (stack[i].last) break;
     }
-    printf("total tests: %ld\n", total);
+    fprintf(stderr, "total tests for square %d with shift %d: %ld\n", SQUARE, SHIFT, total);
 }
 
 static void print_prefix(uint64_t magic, int depth) {
@@ -192,7 +192,7 @@ static void print_prefix(uint64_t magic, int depth) {
         binary[ch++] = (magic & (UINT64_C(1) << i)) ? '1' : '0';
     }
 
-    printf("0b%s (depth %d, %d bits of 0x%lx)\n", binary, depth, stack[depth].bits, magic);
+    fprintf(stderr, "0b%s (sq %d, shift %d, depth %d, %d bits of 0x%lx, num magics: %ld)\n", binary, SQUARE, SHIFT, depth, stack[depth].bits, magic, num_magics);
 }
 
 static void divide_and_conquer(uint64_t prefix, int depth) {
@@ -216,10 +216,10 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
 
         if (ref == frame->size) {
             if (frame->last) {
-                printf("Magic: 0x%lx (depth %d, %d bits, sq: %d, shift: %d)\n", magic, depth, frame->bits, SQUARE, SHIFT);
+                num_magics++;
                 print_prefix(magic, depth);
-                print_stats();
-                exit(0);
+                printf("0x%lx\n", magic);
+                fprintf(stderr, "found magic! 0x%lx (depth %d, %d bits, sq: %d, shift: %d)\n", magic, depth, frame->bits, SQUARE, SHIFT);
             } else {
                 if (depth <= 1) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
@@ -230,12 +230,9 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
 
 int main() {
     uint64_t max_occupied = square_mask(DELTAS, SQUARE);
-    printf("sq: %d, shift: %d, max_occupied: 0x%lx\n", SQUARE, SHIFT, max_occupied);
     init_stack(max_occupied);
-    printf("searching ...\n");
-    fflush(stdout);
+    fprintf(stderr, "searching square=%d shift=%d mask=0x%lx ...\n", SQUARE, SHIFT, max_occupied);
     divide_and_conquer(0, 0);
     print_stats();
-    printf("sq: %d, shift: %d, max_occupied: 0x%lx\n", SQUARE, SHIFT, max_occupied);
-    return 1;
+    return 0;
 }
