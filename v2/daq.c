@@ -217,9 +217,8 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
         if (ref == frame->size) {
             if (frame->last) {
                 num_magics++;
-                print_prefix(magic, depth);
                 printf("0x%lx\n", magic);
-                fprintf(stderr, "found magic! 0x%lx (depth %d, %d bits, sq: %d, shift: %d)\n", magic, depth, frame->bits, SQUARE, SHIFT);
+                if (num_magics < 200) print_prefix(magic, depth);
             } else {
                 if (depth <= 1) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
