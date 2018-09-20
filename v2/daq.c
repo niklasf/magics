@@ -172,7 +172,7 @@ static void print_stats() {
         total += stack[i].stats;
         if (stack[i].last) break;
     }
-    fprintf(stderr, "total tests for square %d with shift %d: %ld\n", SQUARE, SHIFT, total);
+    fprintf(stderr, "total tests for square %d with shift %d: %ld, num magics: %ld\n", SQUARE, SHIFT, total, num_magics);
 }
 
 static void print_prefix(uint64_t magic, int depth) {

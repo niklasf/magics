@@ -1,12 +1,12 @@
-0b_000_0000_00000_00_00000000000000_00_00000_0000_11111111111 (sq 35, shift 9, depth 0, 11 bits of 0x7ff, num magics: 365475)      
-stats[0]: 2044                                                                                                                     
+0b_000_0000_00000_00_00000000000000_00_00000_0000_11111111111 (sq 35, shift 9, depth 0, 11 bits of 0x7ff, num magics: 365475)
+stats[0]: 2044
 stats[1]: 32704
-stats[2]: 1038656                                                                                                                  
+stats[2]: 1038656
 stats[3]: 4053192
-stats[4]: 61491777760                                                                                                              
-stats[5]: 191843470772                                                                                                             
-stats[6]: 2712075777344                                                                                                            
-stats[7]: 2803408666256                                                                                                            
+stats[4]: 61491777760
+stats[5]: 191843470772
+stats[6]: 2712075777344
+stats[7]: 2803408666256
 stats[8]: 11414607168
-total tests for square 35 with shift 9: 5780239425896                                                                              
+total tests for square 35 with shift 9: 5780239425896, num magics: 365475
 ./daq > /dev/null  351198,20s user 3,94s system 99% cpu 97:37:23,10 total
