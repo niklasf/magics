@@ -1,0 +1,13 @@
+0b_00000000_00000000_00000000_00000000_00000000_0000_0_0_0_11_11 (sq 61, shift 10, depth 1, 4 bits of 0xf, num magics: 0)
+stats[0]: 4
+stats[1]: 12
+stats[2]: 24
+stats[3]: 48
+stats[4]: 96
+stats[5]: 1536
+stats[6]: 369408
+stats[7]: 68055808
+stats[8]: 5143666944
+stats[9]: 15836579584
+stats[10]: 697685760
+total tests for square 61 with shift 10: 21746359224, num magics: 0
