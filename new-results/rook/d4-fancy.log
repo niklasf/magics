@@ -1,0 +1,12 @@
+0b_00000000_000000_0_00_0_0_00000_00000000_11111110_1111111111111 (sq 27, shift 9, depth 1, 21 bits of 0x1fdfff, num magics: 0)
+stats[0]: 8176
+stats[1]: 2093056
+stats[2]: 532201216
+stats[3]: 16654653440
+stats[4]: 30736648874
+stats[5]: 51259239734
+stats[6]: 134718875424
+stats[7]: 47582425820
+stats[8]: 33169030016
+stats[9]: 416897536
+total tests for square 27 with shift 9: 315072073292, num magics: 0
