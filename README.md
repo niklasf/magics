@@ -27,10 +27,15 @@ Tools
 
 Verifies a magic candidate.
 
-### `src/magics <CHUNK>`
+### `v1/magics <CHUNK>`
 
-Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `src/Makefile`,
+Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `v1/Makefile`,
 `make` and run `./magics <CHUNK>`. Tests all candidates in the specified range.
+
+### `v2/daq`
+
+Select `BISHOP` or `ROOK`, `SQUARE` and `SHIFT` in `v2/Makefile`,
+`make` and run `./daq`. Counts all magics with the specified settings.
 
 ### `cuda/test`
 
