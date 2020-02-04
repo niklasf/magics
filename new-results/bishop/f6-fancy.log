@@ -1,0 +1,9 @@
+0b_000000000_000000000_000000000_00_00000000000000_00_1111111111 (sq 45, shift 6, depth 0, 10 bits of 0x3ff, num magics: 0)
+stats[0]: 1008
+stats[1]: 4032
+stats[2]: 61786368
+stats[3]: 204592512
+stats[4]: 51381207864
+stats[5]: 2083103990856
+stats[6]: 510804941472
+total tests for square 45 with shift 6: 2645556524112, num magics: 0
