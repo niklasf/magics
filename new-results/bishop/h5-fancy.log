@@ -1,0 +1,7 @@
+0b_000000000_000000000_0000000000000000_1110111_11111111111 (sq 39, shift 4, depth 1, 18 bits of 0x3bfff, num magics: 0)
+stats[0]: 1920
+stats[1]: 230400
+stats[2]: 11897733120
+stats[3]: 2128357885440
+stats[4]: 7130787194880
+total tests for square 39 with shift 4: 9271043045760, num magics: 0
