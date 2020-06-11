@@ -1,0 +1,9 @@
+0b_00_00000000000000_00_000000000_000000000_111110111_1111111111 (sq 18, shift 6, depth 1, 19 bits of 0x7dfff, num magics: 0)
+stats[0]: 1008
+stats[1]: 508032
+stats[2]: 246109248
+stats[3]: 104563855872
+stats[4]: 224519678836
+stats[5]: 253625773282560
+stats[6]: 161919381768
+total tests for square 18 with shift 6: 254117022817324, num magics: 0
