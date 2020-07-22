@@ -1,0 +1,12 @@
+stack[0]: mask=0x200000000 min=0x8000000 step=0x1 max=0x80000000
+stack[1]: mask=0x240000000 min=0x0 step=0x80000000 max=0x400000000
+stack[2]: mask=0x244000000 min=0x0 step=0x400000000 max=0x4000000000
+stack[3]: mask=0x244200000 min=0x8000000000 step=0x4000000000 max=0x80000000000
+stack[4]: mask=0x244280000 min=0x0 step=0x80000000000 max=0x200000000000
+searching square=12 shift=4 mask=0x244280000 ...
+stats[0]: 2013265920
+stats[1]: 16106127360
+stats[2]: 192319091232
+stats[3]: 2026220330070
+stats[4]: 46387582520
+total tests for square 12 with shift 4: 2283046397102, num magics: 0
