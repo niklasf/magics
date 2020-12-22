@@ -220,7 +220,7 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
                 printf("0x%lx\n", magic);
                 if (num_magics < 200) print_prefix(magic, depth);
             } else {
-                if (depth <= 1) print_prefix(magic, depth);
+                if (depth <= 3) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
             }
         }
@@ -231,7 +231,7 @@ int main() {
     uint64_t max_occupied = square_mask(DELTAS, SQUARE);
     init_stack(max_occupied);
     fprintf(stderr, "searching square=%d shift=%d mask=0x%lx ...\n", SQUARE, SHIFT, max_occupied);
-    divide_and_conquer(0, 0);
+    divide_and_conquer(1, 1); // 0, 0
     print_stats();
     return 0;
 }
