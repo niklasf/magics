@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS prefix (
     s7 INTEGER NOT NULL DEFAULT 0,
     s8 INTEGER NOT NULL DEFAULT 0,
     magics INTEGER NOT NULL DEFAULT 0,
-    PRIMARY KEY(a, b, c)
+    PRIMARY KEY(a0, a1)
 );
 
 CREATE INDEX IF NOT EXISTS idx_acquired ON prefix(acquired);

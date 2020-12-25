@@ -7,6 +7,6 @@ with conn, open("schema.sql") as schema:
 
 with conn:
     for a0 in range(0, 1 << 11):
-        print(a)
+        print(a0)
         for a1 in range(0, 1 << 4):
             conn.execute("INSERT INTO prefix (a0, a1) VALUES (?, ?)", (a0, a1))
