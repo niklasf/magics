@@ -2,7 +2,7 @@ import sys
 import requests
 import subprocess
 
-VERSION = 2
+VERSION = 4
 ENDPOINT = sys.argv[1].rstrip("/")
 SECRET = sys.argv[2]
 
@@ -16,6 +16,7 @@ while True:
 
     command = ["../v2/daq"]
     command.extend(str(a) for a in res["args"])
+    print("$", " ".join(command))
     p = subprocess.Popen(command, stdout=subprocess.PIPE, encoding="utf-8")
     while True:
         line = p.stdout.readline()

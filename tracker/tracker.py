@@ -6,7 +6,7 @@ import sys
 SECRET_KEY = sys.argv[1]
 DEPTH = 2
 STATS = 9
-MIN_VERSION = 2
+MIN_VERSION = 4
 
 routes = aiohttp.web.RouteTableDef()
 
@@ -27,7 +27,7 @@ async def acquire(req: aiohttp.web.Request) -> aiohttp.web.Response:
 
     with conn:
         fields = ", ".join([f"a{i}" for i in range(DEPTH)])
-        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < {MIN_VERSION}").fetchone()
+        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < {MIN_VERSION} LIMIT 1").fetchone()
         conn.execute(f"UPDATE prefix SET acquired = ? WHERE {cond(args)}", (version, ))
 
     return aiohttp.web.json_response({
