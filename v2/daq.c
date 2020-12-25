@@ -168,10 +168,11 @@ static void init_stack(uint64_t max_occupied) {
 static void print_stats() {
     uint64_t total = 0;
     for (int i = 0; i < MAX_SQUARES; i++) {
-        fprintf(stderr, "stats[%d]: %ld\n", i, stack[i].stats);
+        printf("SET s%d %ld\n", i, stack[i].stats);
         total += stack[i].stats;
         if (stack[i].last) break;
     }
+    printf("SET magics %ld\n", num_magics);
     fprintf(stderr, "total tests for square %d with shift %d: %ld, num magics: %ld\n", SQUARE, SHIFT, total, num_magics);
 }
 
