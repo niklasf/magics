@@ -5,6 +5,8 @@ verify_ssl = true
 
 [packages]
 aiohttp = "~=3.7.3"
+requests = "~=2.25.1"
 
 [scripts]
 tracker = "python tracker.py"
+client = "python client.py"

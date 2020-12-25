@@ -1,8 +1,9 @@
 import secrets
 import aiohttp.web
 import sqlite3
+import sys
 
-SECRET_KEY = "shh"
+SECRET_KEY = sys.argv[1]
 DEPTH = 2
 STATS = 9
 
@@ -39,7 +40,6 @@ async def submit(req: aiohttp.web.Request) -> aiohttp.web.Response:
     args = body["args"]
     key = body["key"]
     version = body["version"]
-    stats = body["stats"]
     magics = body["magics"]
 
     if not secrets.compare_digest(key, SECRET_KEY):
@@ -48,7 +48,7 @@ async def submit(req: aiohttp.web.Request) -> aiohttp.web.Response:
     builder = []
     for i in range(STATS):
         name = f"s{i}"
-        builder.append(f"{name} = {stats[name]:d}")
+        builder.append(f"{name} = {body[name]:d}")
     set_stats = ", ".join(builder)
 
     with conn:
