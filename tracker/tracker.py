@@ -6,6 +6,7 @@ import sys
 SECRET_KEY = sys.argv[1]
 DEPTH = 2
 STATS = 9
+MIN_VERSION = 2
 
 routes = aiohttp.web.RouteTableDef()
 
@@ -26,7 +27,7 @@ async def acquire(req: aiohttp.web.Request) -> aiohttp.web.Response:
 
     with conn:
         fields = ", ".join([f"a{i}" for i in range(DEPTH)])
-        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < 1").fetchone()
+        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < {MIN_VERSION}").fetchone()
         conn.execute(f"UPDATE prefix SET acquired = ? WHERE {cond(args)}", (version, ))
 
     return aiohttp.web.json_response({
@@ -61,7 +62,7 @@ async def submit(req: aiohttp.web.Request) -> aiohttp.web.Response:
 async def status(_req: aiohttp.web.Request) -> aiohttp.web.Response:
     with conn:
         total, = conn.execute("SELECT COUNT(*) FROM prefix").fetchone()
-        submitted, = conn.execute("SELECT COUNT(*) FROM prefix WHERE submitted > 0").fetchone()
+        submitted, = conn.execute(f"SELECT COUNT(*) FROM prefix WHERE submitted > {MIN_VERSION}").fetchone()
 
     return aiohttp.web.Response(text=f"{submitted}/{total} = {submitted * 100 / total}")
 
