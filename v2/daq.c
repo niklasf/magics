@@ -227,11 +227,20 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     uint64_t max_occupied = square_mask(DELTAS, SQUARE);
     init_stack(max_occupied);
-    fprintf(stderr, "searching square=%d shift=%d mask=0x%lx ...\n", SQUARE, SHIFT, max_occupied);
-    divide_and_conquer(1, 1); // 0, 0
+
+    uint64_t prefix = 0;
+    int depth = 0;
+    int bits = 0;
+    for (; depth < argc - 1; depth++) {
+        prefix |= ((uint64_t) atoi(argv[depth + 1])) << bits;
+        bits = stack[depth].bits;
+    }
+
+    fprintf(stderr, "searching square=%d shift=%d mask=0x%lx prefix=0x%lx depth=%d...\n", SQUARE, SHIFT, max_occupied, prefix, depth);
+    divide_and_conquer(prefix, depth);
     print_stats();
     return 0;
 }
