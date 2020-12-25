@@ -62,7 +62,7 @@ async def submit(req: aiohttp.web.Request) -> aiohttp.web.Response:
 async def status(_req: aiohttp.web.Request) -> aiohttp.web.Response:
     with conn:
         total, = conn.execute("SELECT COUNT(*) FROM prefix").fetchone()
-        submitted, = conn.execute(f"SELECT COUNT(*) FROM prefix WHERE submitted > {MIN_VERSION}").fetchone()
+        submitted, = conn.execute(f"SELECT COUNT(*) FROM prefix WHERE submitted >= {MIN_VERSION}").fetchone()
 
     return aiohttp.web.Response(text=f"{submitted}/{total} = {submitted * 100 / total}")
 
