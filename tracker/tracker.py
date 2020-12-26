@@ -27,7 +27,7 @@ async def acquire(req: aiohttp.web.Request) -> aiohttp.web.Response:
 
     with conn:
         fields = ", ".join([f"a{i}" for i in range(DEPTH)])
-        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < {MIN_VERSION} ORDER BY rand LIMIT 1").fetchone()
+        args = conn.execute(f"SELECT {fields} FROM prefix WHERE acquired < {MIN_VERSION} ORDER BY rand DESC LIMIT 1").fetchone()
         conn.execute(f"UPDATE prefix SET acquired = ? WHERE {cond(args)}", (version, ))
 
     return aiohttp.web.json_response({
