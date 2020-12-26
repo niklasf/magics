@@ -2,7 +2,7 @@ import sys
 import requests
 import subprocess
 
-VERSION = 4
+VERSION = 5
 ENDPOINT = sys.argv[1].rstrip("/")
 SECRET = sys.argv[2]
 
