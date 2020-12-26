@@ -236,7 +236,7 @@ int main(int argc, char *argv[]) {
     int depth = 0;
     int bits = 0;
     for (; depth < argc - 1; depth++) {
-        prefix |= ((uint64_t) atoi(argv[depth + 1])) << bits;
+        prefix |= ((uint64_t) atoll(argv[depth + 1])) << bits;
         bits = stack[depth].bits;
     }
 
