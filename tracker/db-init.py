@@ -15,6 +15,6 @@ with conn:
         print(a0)
         for a1 in range(0, 1 << 8):
             for a2 in range(0, 1 << 8):
-                rand = random.randint(0xffff_ffff)
+                rand = random.randint(0, 0xffff_ffff)
                 conn.execute("INSERT INTO prefix (a0, a1, a2, rand) VALUES (?, ?, ?, ?)", (a0, a1, a2, rand))
 
