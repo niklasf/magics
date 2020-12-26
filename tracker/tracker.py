@@ -4,13 +4,13 @@ import sqlite3
 import sys
 
 SECRET_KEY = sys.argv[1]
-DEPTH = 2
-STATS = 9
-MIN_VERSION = 4
+DEPTH = 3
+STATS = 12
+MIN_VERSION = 5
 
 routes = aiohttp.web.RouteTableDef()
 
-conn = sqlite3.connect("Bd5.db")
+conn = sqlite3.connect("Rh1.db")
 
 
 def cond(args):
@@ -58,7 +58,7 @@ async def submit(req: aiohttp.web.Request) -> aiohttp.web.Response:
     raise aiohttp.web.HTTPNoContent()
 
 
-@routes.get("/")
+@routes.get("/status")
 async def status(_req: aiohttp.web.Request) -> aiohttp.web.Response:
     with conn:
         total, = conn.execute("SELECT COUNT(*) FROM prefix").fetchone()

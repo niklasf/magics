@@ -221,7 +221,7 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
                 printf("0x%lx\n", magic);
                 if (num_magics < 200) print_prefix(magic, depth);
             } else {
-                if (depth <= 3) print_prefix(magic, depth);
+                if (depth <= 4) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
             }
         }
