@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS prefix (
     a0 INTEGER NOT NULL,
     a1 INTEGER NOT NULL,
+    rand INTEGER NOT NULL,
     acquired INTEGER NOT NULL DEFAULT 0,
     submitted INTEGER NOT NULL DEFAULT 0,
     s0 INTEGER NOT NULL DEFAULT 0,
@@ -16,4 +17,4 @@ CREATE TABLE IF NOT EXISTS prefix (
     PRIMARY KEY(a0, a1)
 );
 
-CREATE INDEX IF NOT EXISTS idx_acquired ON prefix(acquired);
+CREATE INDEX IF NOT EXISTS idx_acquired_rand ON prefix(acquired, rand);
