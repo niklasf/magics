@@ -1,7 +1,7 @@
 Finding magic factors for bitboard based move generation
 ========================================================
 
-Tool to find factors for [Magic bitboards](https://chessprogramming.wikispaces.com/Magic+Bitboards).
+Tool to find factors for [Magic bitboards](https://www.chessprogramming.org/Magic_Bitboards).
 
 Exhaustive search
 -----------------
