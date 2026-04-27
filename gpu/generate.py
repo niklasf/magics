@@ -17,7 +17,7 @@ import chess
 import itertools
 
 DELTAS = [-7, 7, -9, 9]
-SQUARE = chess.F1
+SQUARE = chess.H2
 SHIFT = 4
 
 mask = chess._sliding_attacks(SQUARE, 0, DELTAS) & ~chess._edges(SQUARE)
@@ -47,11 +47,13 @@ while True:
 
 print(r"""
 __device__ bool check_magic(uint64_t magic) {
-    char table[1 << SHIFT] = { 0 };
+    char table[1 << SHIFT] = { ZERO_ATTACK_ID }; // initialized for subset 0
     int idx;
-""".replace("SHIFT", str(SHIFT)))
+""".replace("SHIFT", str(SHIFT)).replace("ZERO_ATTACK_ID", str(refs[0])))
 
 for subset, attack_id in refs.items():
+    if not subset:
+        continue  # subset 0 was pre-initialized
     print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, SHIFT))
     print("    if (table[idx] && table[idx] != {}) return false;".format(attack_id))
     print("    table[idx] = {};".format(attack_id))
