@@ -45,11 +45,16 @@ while True:
     if not subset:
         break
 
-print(r"""
-__device__ bool check_magic(uint64_t magic) {
-    char table[1 << SHIFT] = { ZERO_ATTACK_ID }; // initialized for subset 0
-    int idx;
-""".replace("SHIFT", str(SHIFT)).replace("ZERO_ATTACK_ID", str(refs[0])))
+max_attack_id = max(refs.values())
+assert (1 << SHIFT) * SHIFT <= 64, "can pack table into uint64_t"
+assert max_attack_id < (1 << SHIFT)
+
+print("""
+__device__ bool check_magic(uint64_t magic) {{
+    uint64_t table = {zero}; // slot 0 pre-set for subset 0
+    int shift;
+    uint64_t slot;
+""".format(zero=refs[0]))
 
 by_attack = {}
 for subset, attack_id in refs.items():
@@ -63,9 +68,11 @@ for i in range(max(len(subsets) for _, subsets in groups)):
     for attack_id, subsets in groups:
         if i < len(subsets):
             subset = subsets[i]
-            print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, SHIFT))
-            print("    if (table[idx] && table[idx] != {}) return false;".format(attack_id))
-            print("    table[idx] = {};".format(attack_id))
+            print("    shift = (int)((magic * UINT64_C({})) >> {}) * {};".format(subset, 64 - SHIFT, SHIFT))
+            print("    slot = (table >> shift) & UINT64_C(0x{:x});".format((1 << SHIFT) - 1))
+            print("    if (slot && slot != UINT64_C({})) return false;".format(attack_id))
+            print("    table |= UINT64_C({}) << shift;".format(attack_id))
+            print()
 
 print("""
     return true;
