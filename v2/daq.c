@@ -14,6 +14,10 @@
 #error SHIFT not defined
 #endif
 
+#ifndef REPORT_DEPTH
+#error REPORT_DEPTH not defined
+#endif
+
 #if defined(BISHOP)
 const int DELTAS[] = { 7, -7, 9, -9, 0 };
 #elif defined(ROOK)
@@ -221,7 +225,7 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
                 printf("0x%lx\n", magic);
                 if (num_magics < 200) print_prefix(magic, depth);
             } else {
-                if (depth <= 4) print_prefix(magic, depth);
+                if (depth <= REPORT_DEPTH) print_prefix(magic, depth);
                 divide_and_conquer(magic, depth + 1);
             }
         }
