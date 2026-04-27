@@ -29,7 +29,7 @@
 __global__ void test_kernel(uint64_t *result) {
     const uint64_t chunk_size = PERIOD / CHUNKS;
     assert(chunk_size * CHUNKS == PERIOD);
-    assert(chunk_size % 4 == 0);
+    assert(chunk_size % 8 == 0);
     int chunk = THREADS_PER_BLOCK * blockIdx.x + threadIdx.x;
 
     result[chunk] = 0;
@@ -42,11 +42,19 @@ __global__ void test_kernel(uint64_t *result) {
         bool r1 = check_magic(magic + 1);
         bool r2 = check_magic(magic + 2);
         bool r3 = check_magic(magic + 3);
+        bool r4 = check_magic(magic + 4);
+        bool r5 = check_magic(magic + 5);
+        bool r6 = check_magic(magic + 6);
+        bool r7 = check_magic(magic + 7);
         if (r0) { result[chunk] = magic; return; }
         if (r1) { result[chunk] = magic + 1; return; }
         if (r2) { result[chunk] = magic + 2; return; }
         if (r3) { result[chunk] = magic + 3; return; }
-        magic += 4;
+        if (r4) { result[chunk] = magic + 4; return; }
+        if (r5) { result[chunk] = magic + 5; return; }
+        if (r6) { result[chunk] = magic + 6; return; }
+        if (r7) { result[chunk] = magic + 7; return; }
+        magic += 8;
     }
 }
 
