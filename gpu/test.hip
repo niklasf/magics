@@ -59,7 +59,7 @@ __global__ void test_kernel(uint64_t *result) {
 }
 
 int main() {
-    printf("parallel search ...\n");
+    printf("parallel search of %s with shift %d ...\n", SQUARE_NAME, SHIFT);
 
     uint64_t h_result[CHUNKS] = { 0 };
     uint64_t *d_result;
@@ -68,7 +68,7 @@ int main() {
     HIP_CHECK(hipGetLastError());
     HIP_CHECK(hipMemcpy(h_result, d_result, sizeof(uint64_t) * CHUNKS, hipMemcpyDeviceToHost));
 
-    printf("search complete.\n");
+    printf("search of %s with shift %d complete.\n", SQUARE_NAME, SHIFT);
 
     for (int i = 0; i < CHUNKS; i++) {
         if (h_result[i]) printf("magic: 0x%lx\n", h_result[i]);

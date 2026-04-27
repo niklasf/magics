@@ -17,14 +17,16 @@ import chess
 import itertools
 
 DELTAS = [-7, 7, -9, 9]
-SQUARE = chess.H2
+SQUARE = chess.B2
 SHIFT = 4
 
 mask = chess._sliding_attacks(SQUARE, 0, DELTAS) & ~chess._edges(SQUARE)
 
 print(r"""
+#define SQUARE_NAME "{}"
+#define SHIFT {}
 #define PERIOD (UINT64_C(1) << {}) // {}
-""".format(64 - chess.lsb(mask), chess.SQUARE_NAMES[SQUARE]))
+""".format(chess.SQUARE_NAMES[SQUARE], SHIFT, 64 - chess.lsb(mask), chess.SQUARE_NAMES[SQUARE]))
 
 auto_increment = itertools.count(1)
 refs = {}
