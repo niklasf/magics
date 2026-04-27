@@ -37,7 +37,7 @@ Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `v1/Makefile`,
 Select `BISHOP` or `ROOK`, `SQUARE` and `SHIFT` in `v2/Makefile`,
 `make` and run `./daq`. Counts all magics with the specified settings.
 
-### `cuda/test`
+### `gpu/test`
 
 Select square, piece type and shift in `generate.py`.
 `make` and run `./test` to find magic factors with the specified

@@ -17,7 +17,7 @@ import chess
 import itertools
 
 DELTAS = [-7, 7, -9, 9]
-SQUARE = chess.B8
+SQUARE = chess.F1
 SHIFT = 4
 
 mask = chess._sliding_attacks(SQUARE, 0, DELTAS) & ~chess._edges(SQUARE)

@@ -13,18 +13,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include <cuda.h>
+#include <hip/hip_runtime.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
 
 #define CHUNKS (1 << 19)
-#define THREADS_PER_BLOCK 32
+#define THREADS_PER_BLOCK 64
+
+#define HIP_CHECK(ret) if ((ret) != hipSuccess) { abort(); }
 
 #include "generated.inc"
 
-__global__ void test(uint64_t *result) {
+__global__ void test_kernel(uint64_t *result) {
     const uint64_t chunk_size = PERIOD / CHUNKS;
     assert(chunk_size * CHUNKS == PERIOD);
     int chunk = THREADS_PER_BLOCK * blockIdx.x + threadIdx.x;
@@ -43,26 +45,15 @@ __global__ void test(uint64_t *result) {
     }
 }
 
-#define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
-inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true)
-{
-   if (code != cudaSuccess)
-   {
-      fprintf(stderr,"GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
-      if (abort) exit(code);
-   }
-}
-
 int main() {
     printf("parallel search ...\n");
 
     uint64_t h_result[CHUNKS] = { 0 };
     uint64_t *d_result;
-    gpuErrchk(cudaMalloc(&d_result, sizeof(uint64_t) * CHUNKS));
-    test<<<CHUNKS / THREADS_PER_BLOCK, THREADS_PER_BLOCK>>>(d_result);
-    gpuErrchk(cudaPeekAtLastError());
-    gpuErrchk(cudaDeviceSynchronize());
-    gpuErrchk(cudaMemcpy(h_result, d_result, sizeof(uint64_t) * CHUNKS, cudaMemcpyDeviceToHost));
+    HIP_CHECK(hipMalloc(&d_result, sizeof(uint64_t) * CHUNKS));
+    test_kernel<<<CHUNKS / THREADS_PER_BLOCK, THREADS_PER_BLOCK, 0, hipStreamDefault>>>(d_result);
+    HIP_CHECK(hipGetLastError());
+    HIP_CHECK(hipMemcpy(h_result, d_result, sizeof(uint64_t) * CHUNKS, hipMemcpyDeviceToHost));
 
     printf("search complete.\n");
 
