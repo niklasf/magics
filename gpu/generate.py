@@ -51,12 +51,21 @@ __device__ bool check_magic(uint64_t magic) {
     int idx;
 """.replace("SHIFT", str(SHIFT)).replace("ZERO_ATTACK_ID", str(refs[0])))
 
+by_attack = {}
 for subset, attack_id in refs.items():
-    if not subset:
-        continue  # subset 0 was pre-initialized
-    print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, SHIFT))
-    print("    if (table[idx] && table[idx] != {}) return false;".format(attack_id))
-    print("    table[idx] = {};".format(attack_id))
+    if subset:
+        by_attack.setdefault(attack_id, []).append(subset)
+
+# Interleave round-robin, rarest attack_id first, so consecutive checks
+# always have different attack_ids and less frequent ids are placed early.
+groups = sorted(by_attack.items(), key=lambda x: len(x[1]))
+for i in range(max(len(subsets) for _, subsets in groups)):
+    for attack_id, subsets in groups:
+        if i < len(subsets):
+            subset = subsets[i]
+            print("    idx = (magic * UINT64_C({})) >> (64 - {});".format(subset, SHIFT))
+            print("    if (table[idx] && table[idx] != {}) return false;".format(attack_id))
+            print("    table[idx] = {};".format(attack_id))
 
 print("""
     return true;
