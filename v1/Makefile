@@ -1,13 +1,9 @@
-CFLAGS = -D BISHOP -D SQUARE=35 -D EASY_SHIFT=9 -std=gnu99 -march=native -Ofast -flto -fwhole-program -Wall
+CFLAGS = -D BISHOP -D SQUARE=5 -D EASY_SHIFT=5 -std=gnu99 -march=native -Ofast -flto -fwhole-program -Wall
 
 all: magics
 
-magics: magics.c magics.gcda
-	gcc $(CFLAGS) -fprofile-use=magics.gcda -fno-tracer magics.c -o magics
-
-magics.gcda: magics-instrumented
+magics: magics.c
 	rm -f magics.gcda
-	./magics-instrumented --profile
-
-magics-instrumented: magics.c
-	gcc $(CFLAGS) -fprofile-generate magics.c -o magics-instrumented
+	gcc $(CFLAGS) -fprofile-generate magics.c -o magics
+	./magics --profile
+	gcc $(CFLAGS) -fprofile-use -fno-tracer magics.c -o magics
