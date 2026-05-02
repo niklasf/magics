@@ -99,6 +99,7 @@ static uint64_t sliding_attack(const int deltas[], const int square, uint64_t oc
 }
 
 static size_t init_references(const uint64_t mask, reference_t * const refs) {
+    // Init references
     uint64_t b = 0;
     int size = 0;
     do {
@@ -107,6 +108,19 @@ static size_t init_references(const uint64_t mask, reference_t * const refs) {
         size++;
         b = (b - mask) & mask;
     } while (b);
+
+    // Shuffle references
+    uint64_t rng = mask;
+    for (int i = size - 1; i > 0; i--) {
+        rng ^= rng << 13;
+        rng ^= rng >> 7;
+        rng ^= rng << 17;
+        int j = rng % (i + 1);
+        reference_t tmp = refs[i];
+        refs[i] = refs[j];
+        refs[j] = tmp;
+    }
+
     return size;
 }
 
