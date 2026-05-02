@@ -146,12 +146,12 @@ typedef struct {
     reference_t refs[1 << MAX_SQUARES];
     int size;
 
-    uint64_t age[1 << SHIFT];
-
     uint64_t stats;
 } stack_t;
 
 static stack_t stack[MAX_SQUARES];
+static uint64_t table[1 << SHIFT];
+static uint64_t age[1 << SHIFT];
 static uint64_t num_magics = 0;
 
 static void init_stack(uint64_t max_occupied) {
@@ -168,7 +168,6 @@ static void init_stack(uint64_t max_occupied) {
         stack[i].step = UINT64_C(1) << stack[i].prefix_bits;
         stack[i].max = UINT64_C(1) << stack[i].bits;
         stack[i].size = init_references(mask, stack[i].refs);
-        memset(stack[i].age, 0xff, sizeof(uint64_t) * (1 << SHIFT));
         stack[i].stats = 0;
 
         if (stack[i].min <= stack[i].step) {
@@ -181,6 +180,7 @@ static void init_stack(uint64_t max_occupied) {
     }
 
     assert(mask == max_occupied);
+    memset(age, 0xff, sizeof(age));
 }
 
 static void print_stats() {
@@ -215,8 +215,6 @@ static void print_prefix(uint64_t magic, int depth) {
 }
 
 static void divide_and_conquer(uint64_t prefix, int depth) {
-    static uint64_t table[1 << SHIFT];
-
     stack_t * const frame = stack + depth;
 
     for (uint64_t magic = prefix | frame->min; magic < frame->max; magic += frame->step) {
@@ -225,8 +223,8 @@ static void divide_and_conquer(uint64_t prefix, int depth) {
         size_t ref = 0;
         for (; ref < frame->size; ref++) {
             uint64_t idx = (magic * frame->refs[ref].occupied) >> (64 - SHIFT);
-            if (frame->age[idx] != magic) {
-                frame->age[idx] = magic;
+            if (age[idx] != magic) {
+                age[idx] = magic;
                 table[idx] = frame->refs[ref].attack;
             } else if (table[idx] != frame->refs[ref].attack) {
                 break;
