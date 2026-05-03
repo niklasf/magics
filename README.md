@@ -3,6 +3,24 @@ Finding magic factors for bitboard based move generation
 
 Tool to find factors for [Magic bitboards](https://www.chessprogramming.org/Magic_Bitboards).
 
+Results
+-------
+
+All magics for a given square are equivalent to a magic in the range
+`[0, period]` [1].
+
+`c` is the occupancy of the attack mask for the given square (the "easy" shift).
+
+Tables contain magics for fixed shift and shift `c` with proven minimal
+table size (attacks mapped to indexes from in `[0, range]`), as well as magics
+with reduced shift `c - 1`.
+
+### Rooks
+
+| | s | period | c | magic 12 | range 12 | magic c | range c | magic c - 1 |
+| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| h3 | 23 | 2^49 | 11 | | | | | disproved |
+
 Tools
 -----
 
