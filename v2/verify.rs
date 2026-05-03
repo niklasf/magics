@@ -107,17 +107,22 @@ fn main() {
     let mut hard_shift = Scratchpad::new(role, sq, c - 1);
     let mut best_hard: Option<VerifiedMagic> = None;
 
-    for line in std::io::stdin().lines() {
-        if let Some(hex) = line.unwrap().strip_prefix("0x") {
-            let candidate = u64::from_str_radix(hex, 16).unwrap_or_else(|_| panic!("invalid hex: {line:?}"));
+    let mut seen_candidates = 0;
 
-            //let verified = fixed_shift.test(candidate).unwrap_or_else(|_| panic!("not a fixed shift magic: {candidate:#x}"));
+    for line in std::io::stdin().lines() {
+        let line = line.unwrap();
+        if let Some(hex) = line.strip_prefix("0x") {
+            let candidate = u64::from_str_radix(hex, 16).unwrap_or_else(|err| panic!("{err}: {line:?}"));
+
+            seen_candidates += 1;
+
+            //let verified = fixed_shift.test(candidate).unwrap_or_else(|| panic!("not a fixed shift magic: {candidate:#x}"));
             //if best_fixed.is_none_or(|b| verified < b) {
             //    println!("improved fixed: {:?}", verified);
             //    best_fixed = Some(verified);
             //}
 
-            let verified = easy_shift.test(candidate).unwrap_or_else(|_| panic!("not an easy shift magic: {candidate:#x}"));
+            let verified = easy_shift.test(candidate).unwrap_or_else(|| panic!("not an easy shift magic: {candidate:#x}"));
             if best_easy.is_none_or(|b| verified < b) {
                 println!("improved easy (c = {}): {:?}", c, verified);
                 best_easy = Some(verified);
@@ -132,7 +137,8 @@ fn main() {
         }
     }
 
-    println!("---");
+    println!("--- {}{} ---", role.upper_char(), sq);
+    println!("seen candidates (no deduplication): {}", seen_candidates);
     //if let Some(best_fixed) = best_fixed {
     //    println!("best fixed: {:?}", best_fixed);
     //}
@@ -142,4 +148,5 @@ fn main() {
     if let Some(best_hard) = best_hard {
         println!("best hard (c - 1 = {}): {:?}", c - 1, best_hard);
     }
+    println!("goodbye")
 }
