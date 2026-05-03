@@ -1,5 +1,8 @@
 #!/usr/bin/env cargo
 ---
+[package]
+edition = "2024"
+
 [dependencies]
 shakmaty = "0.30"
 
@@ -108,11 +111,19 @@ fn main() {
     let mut best_hard: Option<VerifiedMagic> = None;
 
     let mut seen_candidates = 0;
+    let mut formatting_errors = 0;
 
     for line in std::io::stdin().lines() {
         let line = line.unwrap();
         if let Some(hex) = line.strip_prefix("0x") {
-            let candidate = u64::from_str_radix(hex, 16).unwrap_or_else(|err| panic!("{err}: {line:?}"));
+            let candidate = match u64::from_str_radix(hex, 16) {
+                Ok(candidate) => candidate,
+                Err(err) => {
+                    println!("{err}: {line:?}");
+                    formatting_errors += 1;
+                    continue;
+                }
+            };
 
             seen_candidates += 1;
 
@@ -139,6 +150,7 @@ fn main() {
 
     println!("--- {}{} ---", role.upper_char(), sq);
     println!("seen candidates (no deduplication): {}", seen_candidates);
+    println!("formatting errors: {}", formatting_errors);
     //if let Some(best_fixed) = best_fixed {
     //    println!("best fixed: {:?}", best_fixed);
     //}
