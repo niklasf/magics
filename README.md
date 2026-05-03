@@ -62,7 +62,7 @@ New results in **bold**.
 | e5 | 36 | 2^52 | 10 | | | | | **disproved** |
 | f5 | 37 | 2^51 | 10 | | | | | **disproved** |
 | g5 | 38 | 2^50 | 10 | | | | | **disproved** |
-| h5 | 39 | 2^49 | 11 | | | | | **disproved** |
+| h5 | 39 | 2^49 | 11 | | | **0x4242136fff00** | 2045 | **disproved** |
 | a6 | 40 | 2^56 | 11 | | | | | **disproved** |
 | b6 | 41 | 2^55 | 10 | | | | | **disproved** |
 | c6 | 42 | 2^54 | 10 | | | | | **disproved** |

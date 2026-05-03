@@ -98,11 +98,8 @@ impl Scratchpad {
 
 fn main() {
     let role = Role::Rook;
-    let sq = Square::G3;
-    let c = 10;
-
-    //let mut fixed_shift = Scratchpad::new(role, sq, 12);
-    //let mut best_fixed: Option<VerifiedMagic> = None;
+    let sq = Square::H5;
+    let c = 11;
 
     let mut easy_shift = Scratchpad::new(role, sq, c);
     let mut best_easy: Option<VerifiedMagic> = None;
@@ -127,12 +124,6 @@ fn main() {
 
             seen_candidates += 1;
 
-            //let verified = fixed_shift.test(candidate).unwrap_or_else(|| panic!("not a fixed shift magic: {candidate:#x}"));
-            //if best_fixed.is_none_or(|b| verified < b) {
-            //    println!("improved fixed: {:?}", verified);
-            //    best_fixed = Some(verified);
-            //}
-
             let verified = easy_shift.test(candidate).unwrap_or_else(|| panic!("not an easy shift magic: {candidate:#x}"));
             if best_easy.is_none_or(|b| verified < b) {
                 println!("improved easy (c = {}): {:?}", c, verified);
@@ -151,9 +142,6 @@ fn main() {
     println!("--- {}{} ---", role.upper_char(), sq);
     println!("seen candidates (no deduplication): {}", seen_candidates);
     println!("formatting errors: {}", formatting_errors);
-    //if let Some(best_fixed) = best_fixed {
-    //    println!("best fixed: {:?}", best_fixed);
-    //}
     if let Some(best_easy) = best_easy {
         println!("best easy (c = {}): {:?}", c, best_easy);
     }
