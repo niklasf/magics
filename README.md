@@ -17,6 +17,7 @@ with reduced shift `c - 1`.
 
 The latter include [results from](https://www.chessprogramming.org/Best_Magics_so_far)
 Grant Osborne, Peter Österlund, Volker Annuss, Gerd Isenberg, and Richard Pijl.
+New results in **bold**.
 
 ### Rooks
 
@@ -100,8 +101,8 @@ Grant Osborne, Peter Österlund, Volker Annuss, Gerd Isenberg, and Richard Pijl.
 | h2 | 15 | 2^42 | 5 | **0x820820020** | 61 | **0x29748305f5** | 22 | **0x410509fff0** |
 | d6 | 43 | 2^42 | 7 | **0x8840200040** | 132 | **0xa44000800** | 127 | **disproved** |
 | c7 | 50 | 2^42 | 5 | **0x820806000** | 35 | **0x50c34179e6** | 29 | **disproved** |
-| b8 | 57 | 2^42 | 5 | **0x820820020** | 61 | **0x58c328c2ee** | 22 | **0x1ec04eae595** |
-| g2 | 14 | 2^43 | 5 | **0x1041040040** | 61 | **0x52e9060be9** | 22 | **0x820a13ffe0** |
+| b8 | 57 | 2^42 | 5 | **0x820820020** | 61 | **0x58c328c2ee** | 22 | 0x1ec04eae595 |
+| g2 | 14 | 2^43 | 5 | **0x1041040040** | 61 | **0x52e9060be9** | 22 | 0x820a13ffe0 |
 | f2 | 13 | 2^44 | 5 | **0x21c1007bff** | 59 | **0xa21427af62** | 28 | **disproved** |
 | e2 | 12 | 2^45 | 5 | **0x4402000000** | 62 | **0x8f24760b248** | 30 | **disproved** |
 | b2 | 9 | 2^46 | 5 | | | | | 0xfc087a874a3cf7f6 |
