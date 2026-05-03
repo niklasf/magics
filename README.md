@@ -3,34 +3,12 @@ Finding magic factors for bitboard based move generation
 
 Tool to find factors for [Magic bitboards](https://www.chessprogramming.org/Magic_Bitboards).
 
-Exhaustive search
------------------
-
-When looking for magic factors `m` with shift `w` it is sufficient to look
-in the range `2^{64 - w - lsb(r_max)} <= m < 2^{64 - lsb(r_max)}` where
-`r_max` is the maximum relevant occupancy for the square [1].
-
-Tricks for fast testing
------------------------
-
-1. Avoid zero filling table (like Stockfish).
-2. Dynamically reorder relevant occupancies to fail earlier on average.
-
-![Performance comparison](/fig-benchmark-rf8.png)
-
-*Performance based on search of improved rook magics for f8.*
-
 Tools
 -----
 
 ### `verify.py <CANDIDATE>`
 
 Verifies a magic candidate.
-
-### `v1/magics <CHUNK>`
-
-Select `BISHOP` or `ROOK`, `SQUARE` and `EASY_SHIFT` in `v1/Makefile`,
-`make` and run `./magics <CHUNK>`. Tests all candidates in the specified range.
 
 ### `v2/daq`
 
