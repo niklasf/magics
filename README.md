@@ -15,11 +15,22 @@ Tables contain magics for fixed shift and shift `c` with proven minimal
 table size (attacks mapped to indexes from in `[0, range]`), as well as magics
 with reduced shift `c - 1`.
 
+The latter include [results from](https://www.chessprogramming.org/Best_Magics_so_far)
+Grant Osborne, Peter Österlund, Volker Annuss, Gerd Isenberg, and Richard Pijl.
+
 ### Rooks
 
 | | s | period | c | magic 12 | range 12 | magic c | range c | magic c - 1 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| h3 | 23 | 2^49 | 11 | | | | | disproved |
+| a1 | 0 | 2^63 | 12 | | | | |
+| b1 | 1 | 2^62 | 11 | | | | |
+| c1 | 2 | 2^63 | 11 | | | | |
+| d1 | 3 | 2^63 | 11 | | | | |
+| e1 | 4 | 2^63 | 11 | | | | |
+| f1 | 5 | 2^63 | 11 | | | | |
+| g1 | 6 | 2^63 | 11 | | | | |
+| h1 | 7 | 2^63 | 12 | | | | |
+| h3 | 23 | 2^49 | 11 | | | | | **disproved** |
 
 Tools
 -----
