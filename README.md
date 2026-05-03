@@ -54,7 +54,7 @@ New results in **bold**.
 | e4 | 28 | 2^52 | 10 | | | | | **disproved** |
 | f4 | 29 | 2^51 | 10 | | | | | **disproved** |
 | g4 | 30 | 2^50 | 10 | | | | | **disproved** |
-| h4 | 31 | 2^49 | 11 | | | | | **disproved** |
+| h4 | 31 | 2^49 | 11 | | | **0x137894006eced** | 2044 | **disproved** |
 | a5 | 32 | 2^56 | 11 | | | | | **disproved** |
 | b5 | 33 | 2^55 | 10 | | | | | **disproved** |
 | c5 | 34 | 2^54 | 10 | | | | | **disproved** |
